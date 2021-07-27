@@ -1,0 +1,192 @@
+<!--
+Name      : Mohd Danish Shafiq
+Class     : DIT 2B22
+Admin no. : p2043483
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SP Games</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        .topnav a {
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        .topnav a:hover {
+            background-color: #666699;
+            color: black;
+        }
+
+        .topnav a.active {
+            background-color: #666699;
+            color: white;
+        }
+
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .hero-image {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/images/haha.jpg");
+            height: 50%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        .hero-text {
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+        }
+
+        .hero-text button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 10px 25px;
+            color: black;
+            background-color: #ddd;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .hero-text button:hover {
+            background-color: #555;
+            color: white;
+        }
+
+        .topnav-left {
+            float: left;
+        }
+
+        .topnav-right {
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hero-image">
+        <div class="hero-text">
+            <h1 style="font-size:50px; font-style: italic">All Games</h1>
+        </div>
+    </div>
+    <div style="background-image: url(/images/back.jfif); height: max-content;">
+        <div class="topnav">
+            <div class="topnav-left">
+                <a href="/" style="color: white;">Home</a>
+                <a class="nav-link" href="/categories/" style="color: white;">Categories</a>
+                <a id="addGame" class="nav-link" href="" style="color: white;"></a>
+                <a id="addCategory" class="nav-link" href="" style="color: white;"></a>
+            </div>
+            <div class="topnav-right">
+                <a id="login-logout" class="nav-link" href="" style="color: white;"></a>
+                <img src="/images/logo.png" width="50" />
+            </div>
+        </div>
+        <div class="row" id="messages" style="justify-content: center; margin-right: 10rem;">
+
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const baseUrl = "http://localhost:3000";
+        const loggedInUserID = parseInt(localStorage.getItem("loggedInUserID"));
+
+        const token = localStorage.getItem("token");
+        if (token === null || isNaN(loggedInUserID)) {
+            // show sign in link
+            $('#login-logout').html("Log In")
+            $('#login-logout').attr("href", "/login")
+        } else {
+            // show log out link
+            $('#login-logout').html("Log Out")
+            $("#login-logout").click(function () {
+                window.localStorage.clear();
+                $('#login-logout').attr("href", "/")
+                window.alert("Successfully Log Out");
+            });
+        }
+
+        axios.get(`${baseUrl}/users/${loggedInUserID}`)
+            .then((response) => {
+                console.log("-------------Response Data--------------")
+                console.log(response);
+                const users = response.data;
+                users.forEach((user) => {
+                    if (user.type == 'Admin') {
+                        $('#addGame').html("Add Game")
+                        $('#addGame').attr("href", "/addgame")
+                        $('#addCategory').html("Add Category")
+                        $('#addCategory').attr("href", "/addcategory/")
+                    }
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+        axios.get(`${baseUrl}/games/`)
+            .then((response) => {
+                const games = response.data;
+                games.forEach((game) => {
+                    const postHtml = `
+                        <div class="card" style="margin: 2rem; background-color: transparent; color: white;">
+                    <div class="card-body">
+                        <p class="card-text"><img src="/images/${game.images}"width = 300 height="400"></p>
+                        <p class="card-text">Title: ${game.title}</p>
+                        <p class="card-text">Price: $${game.price}</p>
+                        <p class="card-text">Category: ${game.catname}</p>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <p class="card-text" style="color: white;">Platform: ${game.platform}</p>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <a href="/game/?gameid=${game.gameid}" class="btn" class="View" style="background-color: white; color: black; width: 300px; border-radius: 30px">View</a>
+                    </div>
+                </div>
+                `;
+                    $("#messages").append(
+                        postHtml); // append - appear at bottom
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    </script>
+</body>
+
+</html>
