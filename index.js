@@ -12,10 +12,6 @@ const app = express();
 // Endpoints
 //---------------------------------------------------------------------
 
-app.get("/", (req, res) => {
-  res.sendFile("/allgames.html", { root: __dirname });
-});
-
 app.get("/profile/", (req, res) => {
   res.sendFile("/profile.html", { root: __dirname });
 });
