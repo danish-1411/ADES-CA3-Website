@@ -17,56 +17,56 @@ app.get("/", (req, res) => {
 });
 
 app.get("/profile/", (req, res) => {
-  res.sendFile("/public/profile.html", { root: __dirname });
+  res.sendFile("/profile.html", { root: __dirname });
 });
 
 app.get("/login/", (req, res) => {
-  res.sendFile("/public/login.html", { root: __dirname });
+  res.sendFile("/login.html", { root: __dirname });
 });
 
 app.get("/addgame/", (req, res) => {
-  res.sendFile("/public/addgame.html", { root: __dirname });
+  res.sendFile("/addgame.html", { root: __dirname });
 });
 
 app.get("/game/", (req, res) => {
-  res.sendFile("/public/game.html", { root: __dirname });
+  res.sendFile("/game.html", { root: __dirname });
 });
 
 app.get("/price/", (req, res) => {
-  res.sendFile("/public/price.html", { root: __dirname });
+  res.sendFile("/price.html", { root: __dirname });
 });
 
 app.get("/title/", (req, res) => {
-  res.sendFile("/public/title.html", { root: __dirname });
+  res.sendFile("/title.html", { root: __dirname });
 });
 
 app.get("/platform/", (req, res) => {
-  res.sendFile("/public/platform.html", { root: __dirname });
+  res.sendFile("/platform.html", { root: __dirname });
 });
 
 app.get("/categories/", (req, res) => {
-  res.sendFile("/public/categories.html", { root: __dirname });
+  res.sendFile("/categories.html", { root: __dirname });
 });
 
 app.get("/category/", (req, res) => {
-  res.sendFile("/public/category.html", { root: __dirname });
+  res.sendFile("/category.html", { root: __dirname });
 });
 
 app.get("/addcategory/", (req, res) => {
-  res.sendFile("/public/addcategory.html", { root: __dirname });
+  res.sendFile("/addcategory.html", { root: __dirname });
 });
 
 app.get("/register/", (req, res) => {
-  res.sendFile("/public/register.html", { root: __dirname });
+  res.sendFile("/register.html", { root: __dirname });
 });
 
 app.get("/allgames/", (req, res) => {
-  res.sendFile("/public/allgames.html", { root: __dirname });
+  res.sendFile("/allgames.html", { root: __dirname });
 });
 
 app.get("/images/:filename", (req, res) => {
   var images_filename = req.params.filename;
-  res.sendFile(`/public/images/${images_filename}`, { root: __dirname });
+  res.sendFile(`/images/${images_filename}`, { root: __dirname });
 });
 
 
