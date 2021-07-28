@@ -13,7 +13,7 @@ const app = express();
 //---------------------------------------------------------------------
 
 app.get("/", (req, res) => {
-  res.sendFile("/public/home.html", { root: __dirname });
+  res.sendFile("/home.html", { root: __dirname });
 });
 
 app.get("/profile/", (req, res) => {
