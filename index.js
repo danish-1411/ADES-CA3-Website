@@ -12,7 +12,7 @@ const app = express();
 // Endpoints
 //---------------------------------------------------------------------
 
-app.get("/profile/", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile("/profile.html", { root: __dirname });
 });
 
